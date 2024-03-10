@@ -3,6 +3,7 @@
 
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
+#include "lib/bmp/bmp.h"
 
 void setupWebRoutes(AsyncWebServer& server);
 

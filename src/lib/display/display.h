@@ -5,6 +5,6 @@
 #include <Adafruit_SSD1306.h>
 
 void initDisplay();
-void displayMessage(String message, int x, int y, bool clearDisplay);
+void displayMessage(String message, int x, int y, bool clearDisplay, bool clearLine);
 
 #endif

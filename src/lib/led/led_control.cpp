@@ -11,7 +11,11 @@ void initLEDs() {
   pinMode(BLUE_PIN, OUTPUT);
 }
 
-void setRGB(int red, int green, int blue) {
+void setRGB(uint32_t hexColor) {
+  int red = (hexColor >> 16) & 0xFF;    // Extrahieren der Rotkomponente
+  int green = (hexColor >> 8) & 0xFF;   // Extrahieren der Grünkomponente
+  int blue = hexColor & 0xFF;           // Extrahieren der Blaukomponente
+  
   digitalWrite(RED_PIN, !red);
   digitalWrite(GREEN_PIN, !green);
   digitalWrite(BLUE_PIN, !blue);

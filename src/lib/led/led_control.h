@@ -1,7 +1,9 @@
 #ifndef LED_CONTROL_H
 #define LED_CONTROL_H
 
+#include <Arduino.h>
+
 void initLEDs();
-void setRGB(int red, int green, int blue);
+void setRGB(uint32_t hexColor);
 
 #endif

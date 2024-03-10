@@ -16,10 +16,12 @@ void initDisplay() {
   display.display();
 }
 
-void displayMessage(String message, int x, int y, bool clearDisplay) {
+void displayMessage(String message, int x, int y, bool clearDisplay, bool clearLine) {
   display.setCursor(x, y);
   if (clearDisplay) {
   display.clearDisplay();
+  } else if (clearLine) {
+    display.fillRect(0, y, OLED_WIDTH, 8, SSD1306_BLACK);
   }
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);

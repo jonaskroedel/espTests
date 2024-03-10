@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Servo Control</title>
+    <meta charset="UTF-8">
+    <title>Temperaturanzeige</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h2>Servo Control Interface</h2>
-    <button id="moveServo">Move Servo 30°</button>
-
-    <script>
-        document.getElementById('moveServo').addEventListener('click', function() {
-            fetch('/move-servo?position=30');
-        });
-    </script>
+    <label for="positionSlider">Servo Position:</label>
+    <input type="range" id="positionSlider" min="0" max="180" value="90"><br>
+    <span id="positionValue">90</span>°<br>
+    <button id="moveServo">Move Servo</button>
+    <p>Aktuelle Temperatur: <span id="temperature">Lädt...</span>°C</p>
+    <p>LED Farbe wählen:</p>
+<input type="color" id="colorPicker" value="#ff0000"> <!-- Standardfarbe Rot -->
+<button id="setColor">Farbe setzen</button>
+    <script src="scripts.js"></script>
 </body>
 </html>
