@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Servo Control</title>
+</head>
+<body>
+    <h2>Servo Control Interface</h2>
+    <button id="moveServo">Move Servo 30°</button>
+
+    <script>
+        document.getElementById('moveServo').addEventListener('click', function() {
+            fetch('/move-servo?position=30');
+        });
+    </script>
+</body>
+</html>

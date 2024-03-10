@@ -2,29 +2,25 @@
 #include <Arduino.h>
 #include "lib/display/display.h"
 
-const int freq = 50; // Servo frequency (50Hz)
-const int ledChannel = 0; // Use first channel of 16 available
-const int resolution = 16; // 16-bit resolution
-int servoPin;
+Servo motor;
 
-void initServo(int pin) {
-  servoPin = pin;
-  ledcSetup(ledChannel, freq, resolution);
-  ledcAttachPin(servoPin, ledChannel);
+void initMotor(int pin) {
+    // Initialize the motor on a specific pin
+    motor.setPeriodHertz(50); // Standard 50hz servo
+    motor.attach(pin, 500, 2400); // attaches the servo on pin to the servo object
+    // 500-2400 us is a common pulse width range for servos, adjust if necessary
 }
 
-void rotateServo() {
-  // Assuming a SG90 servo motor, these duty cycles correspond to 0° and 180°.
-  // These values might need to be adjusted depending on your specific servo.
-  int minDuty = 1638; // ~1ms pulse width (0°)
-  int maxDuty = 8191; // ~2ms pulse width (180°)
+void moveServoAndWait(int pin, int targetPosition, int returnPosition, int delayTime) {
+    initMotor(pin); // Initialize the servo motor
+    setMotorPosition(targetPosition); // Move servo to target position
+    delay(delayTime); // Wait for 0.5 seconds
+    setMotorPosition(returnPosition); // Move servo back to return position
+}
 
-  ledcWrite(ledChannel, minDuty); // Move to 0°
-  delay(1000);
-  ledcWrite(ledChannel, maxDuty); // Move to 180°
-  delay(1000);
-  ledcWrite(ledChannel, minDuty); // Move back to 0°
-  delay(1000);
-
-  displayMessage("Servo test complete", 0, 32, false);
+void setMotorPosition(int degrees) {
+    // Set the servo position in degrees
+    // Make sure to constrain the degrees to the servo's range if needed
+    degrees = constrain(degrees, 0, 180);
+    motor.write(degrees);
 }

@@ -1,22 +1,37 @@
 #include <WiFi.h>
-#include "lib/display/display.h" // Include the display header
-#include "lib/led/led_control.h" // Include the LED control header
-#include "lib/motor/motor.h" // Include the motor header
-#include "lib/wifi/wifi_connection.h" // Include the WiFi connection header
-#include "lib/credentials/wifi_credentials.h" // Include the WiFi credentials header
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include <SPIFFS.h>
+
+#include "lib/display/display.h"
+#include "lib/led/led_control.h"
+#include "lib/motor/motor.h"
+#include "lib/wifi/wifi_connection.h"
+#include "lib/credentials/wifi_credentials.h"
+#include "lib/server/web_routes.h"
+
+AsyncWebServer server(80); // Instantiate the web server
 
 void setup() {
-  Serial.begin(115200);
-  initDisplay(); // Initialize the display
-  initLEDs(); // Initialize the LEDs
-  initServo(12);
+    Serial.begin(115200);
+    
+    initDisplay();
+    initLEDs();
+    initMotor(12);
 
-  // Display initialization message
-  displayMessage("Connecting to WiFi...", 0, 16, true);
-  connectToWiFi(ssid, password); // Connect to WiFi
-  rotateServo();
+    if (!SPIFFS.begin(true)) {
+        Serial.println("An Error has occurred while mounting SPIFFS");
+        return;
+    }
+
+    displayMessage("Connecting to WiFi...", 0, 0, true);
+    connectToWiFi(ssid, password); // Manage WiFi connectivity
+
+    // Initialize and start the web server with defined routes
+    setupWebRoutes(server);
+    server.begin();
 }
 
 void loop() {
-  // No need to do anything here
+  // Main loop body remains empty for this asynchronous web server setup
 }
